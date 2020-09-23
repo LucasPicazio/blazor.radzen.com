@@ -36,7 +36,7 @@
 </RadzenExample>
 
 @code {
-    void ShowContextMenu(MouseEventArgs args, ContextMenuOptions options = null) => contextMenuService.Open(args, ds =>
+    void ShowContextMenu(MouseEventArgs args) => contextMenuService.Open(args, ds =>
         @<RadzenMenu Click="OnMenuItemClick">
             <RadzenMenuItem Text="Item1" Value="1"></RadzenMenuItem>
             <RadzenMenuItem Text="Item2" Value="2"></RadzenMenuItem>
@@ -47,7 +47,7 @@
                 </RadzenMenuItem>
             </RadzenMenuItem>
             </RadzenMenu>
-        , options);
+        );
 
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
