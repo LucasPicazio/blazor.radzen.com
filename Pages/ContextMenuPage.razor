@@ -4,34 +4,56 @@
 
 <RadzenExample Name="ContextMenu" Documentation="true">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h3 style="margin-top: 20px;">Show context menu for Radzen component</h3>
+            <RadzenButton Text="Show context menu" ContextMenu="@(args => contextMenuService.Open(args,
+                                                                  new List<ContextMenuItem>()
+                                                                  {
+                                                                      new ContextMenuItem(){ Text = "Context menu item 1", Value = 1 },
+                                                                      new ContextMenuItem(){ Text = "Context menu item 2", Value = 2 },
+                                                                      new ContextMenuItem(){ Text = "Context menu item 3", Value = 3 },
+                                                                  }, OnMenuItemClick))" />
+            <br />
+            <h3 style="margin-top: 20px;">Show context menu with custom content</h3>
             <RadzenButton Text="Show context menu" ContextMenu="@(args => ShowContextMenu(args) )" />
             <br />
-            <h3 style="margin-top: 20px;">Show context menu for HTML elment</h3>
+            <h3 style="margin-top: 20px;">Show context menu with custom content for HTML elment</h3>
             <button @oncontextmenu="@(args => ShowContextMenu(args))" @oncontextmenu:preventDefault="true">
                 Show context menu
             </button>
+        </div>
+        <div class="col-md-6">
+            <h3>Events</h3>
+            <RadzenCard style="overflow: auto;height:500px;">
+                @foreach (var e in events.OrderByDescending(i => i.Key))
+                {
+                    @e.Value
+                    <br />
+                }
+            </RadzenCard>
         </div>
     </div>
 </RadzenExample>
 
 @code {
     void ShowContextMenu(MouseEventArgs args, ContextMenuOptions options = null) => contextMenuService.Open(args, ds =>
-    @<RadzenMenu Click="@MenuClick">
-        <RadzenMenuItem Text="Item1"></RadzenMenuItem>
-        <RadzenMenuItem Text="Item2"></RadzenMenuItem>
-        <RadzenMenuItem Text="More items">
-            <RadzenMenuItem Text="More sub items">
-                <RadzenMenuItem Text="Item1"></RadzenMenuItem>
-                <RadzenMenuItem Text="Item2"></RadzenMenuItem>
+        @<RadzenMenu Click="OnMenuItemClick">
+            <RadzenMenuItem Text="Item1" Value="1"></RadzenMenuItem>
+            <RadzenMenuItem Text="Item2" Value="2"></RadzenMenuItem>
+            <RadzenMenuItem Text="More items" Value="3">
+                <RadzenMenuItem Text="More sub items" Value="4">
+                    <RadzenMenuItem Text="Item1" Value="5"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Item2" Value="6"></RadzenMenuItem>
+                </RadzenMenuItem>
             </RadzenMenuItem>
-        </RadzenMenuItem>
-        </RadzenMenu>
-    , options);
+            </RadzenMenu>
+        , options);
 
-    void MenuClick(MenuItemEventArgs args) 
-    { 
-        
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    void OnMenuItemClick(MenuItemEventArgs args)
+    {
+        events.Add(DateTime.Now, $"Menu item with Value={args.Value} clicked");
+        StateHasChanged();
     }
 }
