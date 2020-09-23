@@ -18,18 +18,20 @@
 
 @code {
     void ShowContextMenu(MouseEventArgs args, ContextMenuOptions options = null) => contextMenuService.Open(args, ds =>
-@<div>
-    <RadzenMenu>
-        <RadzenMenuItem Text="More">
-            <RadzenMenuItem Text="Item1"></RadzenMenuItem>
-            <RadzenMenuItem Text="Item2"></RadzenMenuItem>
-            <RadzenMenuItem Text="More items">
-                <RadzenMenuItem Text="More sub items">
-                    <RadzenMenuItem Text="Item1"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Item2"></RadzenMenuItem>
-                </RadzenMenuItem>
+    @<RadzenMenu Click="@MenuClick">
+        <RadzenMenuItem Text="Item1"></RadzenMenuItem>
+        <RadzenMenuItem Text="Item2"></RadzenMenuItem>
+        <RadzenMenuItem Text="More items">
+            <RadzenMenuItem Text="More sub items">
+                <RadzenMenuItem Text="Item1"></RadzenMenuItem>
+                <RadzenMenuItem Text="Item2"></RadzenMenuItem>
             </RadzenMenuItem>
         </RadzenMenuItem>
-    </RadzenMenu>
-</div>, options);
+        </RadzenMenu>
+    , options);
+
+    void MenuClick(MenuItemEventArgs args) 
+    { 
+        
+    }
 }
